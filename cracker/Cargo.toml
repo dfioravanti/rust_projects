@@ -1,0 +1,21 @@
+[package]
+name = "cracker"
+version = "0.1.0"
+authors = ["Diego Fioravanti <fioravanti.diego@gmail.com>"]
+edition = "2018"
+
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+rand = "0.8"
+openssl = { version = "0.10", features = ["vendored"] }
+num = "0.3"
+
+[dependencies.pyo3]
+version = "0.13"
+features = ["extension-module"]
