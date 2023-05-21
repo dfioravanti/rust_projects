@@ -48,7 +48,7 @@ fn generate_valid_string_one_thread(
     let mut start_time_chunk = Instant::now();
 
     // Some operations are expensive and make sense to execute them only every once in a while
-    let check_every = 10000000;
+    let check_every = 10_000_000;
     // Enumerate uses usize and cannot be changed so we need to keep track by hand of the number of loops
     let mut i: u128 = 0;
     'main_loop: for mut value in lower_limit..upper_limit {
@@ -164,7 +164,7 @@ pub fn generate_valid_string(
         let handle = thread::spawn(move || {
             // We divide the interval [0, max_value) in nb_threads chunks
             // and select the correct chuck for the current thread.
-            let nb_element_thread = max_value.div_floor(&(nb_threads as u128));
+            let nb_element_thread = Integer::div_floor(&max_value, &(nb_threads as u128));
             let lower_limit: u128 = nb_thread as u128 * nb_element_thread as u128;
             let upper_limit: u128;
             if nb_thread != nb_threads {
