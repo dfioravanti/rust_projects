@@ -2,6 +2,7 @@ use rand::{
     distributions::{Distribution, Standard},
     Rng,
 };
+use indicatif::ProgressIterator;
 enum GameResult {
     Won,
     Lost,
@@ -30,10 +31,10 @@ impl Distribution<Dice> for Standard {
 }
 
 fn minus_one_or_zero(value: u32) -> u32 {
-    if value > 0 {
-        return value - 1;
+    return if value > 0 {
+        value - 1
     } else {
-        return 0;
+        0
     }
 }
 
@@ -67,14 +68,16 @@ fn play(nb_fruits: u32, nb_raven_cards: u32) -> GameResult {
 }
 
 fn main() {
-    let number_games = 2000000;
+    let number_games = 20_000_000;
+
     let nb_fruits = 4;
     let nb_raven_cards = 5;
 
     let mut nb_victories = 0;
     let mut nb_losses = 0;
 
-    for _ in 0..number_games {
+    for _ in (0..number_games).progress() {
+
         match play(nb_fruits, nb_raven_cards) {
             GameResult::Won => nb_victories += 1,
             GameResult::Lost => nb_losses += 1,
